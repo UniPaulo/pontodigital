@@ -1,0 +1,10 @@
+<div class="Lightbox">
+  <div [ngClass]="{'full_width': full, 'Lightbox__box': !disable_style, 'Custom': disable_style}">
+    <ng-content></ng-content>
+
+    <button class="Lightbox__box--close" (click)="onClick.emit($event)">
+      <img src="/assets/img/close.png" alt="close" title="close">
+    </button>
+
+  </div>
+</div>

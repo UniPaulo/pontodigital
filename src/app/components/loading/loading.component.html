@@ -1,0 +1,24 @@
+<section *ngIf="modalVisible" class="Modal">
+  <div class="Modal__content">
+    <span (click)="closeModal()" class="Modal__content--close">X</span>
+    <header class="Modal__content--header">
+      {{header}}
+    </header>
+    <div class="Modal__content--body">
+        <ng-content></ng-content>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="modalVisibleSpinner" class="Modal">
+  <div class="loader">
+    <div class="sk-chase">
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </div>
+  </div>
+</section>

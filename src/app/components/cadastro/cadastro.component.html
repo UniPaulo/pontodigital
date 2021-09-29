@@ -1,0 +1,162 @@
+<app-modal *ngIf="lightbox" (onClick)="closeLightbox()">
+  <p [innerHTML]="message_error"></p>
+</app-modal>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+  <app-header></app-header>
+  <div class="app-main">
+    <div class="app-main__outer">
+      <div class="app-main__inner">
+        <div class="app-page-title">
+          <div class="page-title-wrapper">
+            <!-- Tela aqui -->
+            <br>
+            <div class="tab-content">
+              <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-4 offset-sm-4 text-center">
+                    <div class="main-card mb-3 card">
+                      <div class="card-body">
+                        <h5 class="card-title">CADASTRAR/EDITAR FUNCIONÁRIO</h5>
+                        <form [formGroup]="formCadastro">
+                          <div class="position-relative form-group text-left"><label for="cpf"
+                              class="">CPF</label><input name="cpf" id="cpf" placeholder="000.000.000-00"
+                              mask="000.000.000-00" type="cpf" class="form-control" formControlName="cpf"
+                              (input)="buscarCPF()">
+                            <small class="font-weight-bold text-left">*Se o CPF existir vai carregar os dados do
+                              Funcionário</small><br>
+                            <span *ngIf="
+                             formCadastro.get('cpf')?.invalid &&
+                               (formCadastro.get('cpf')?.dirty ||
+                               formCadastro.get('cpf')?.touched)
+                             ">
+                              <mat-error *ngIf="formCadastro.get('cpf')?.errors?.required">Campo Obrigatorio.
+                              </mat-error>
+                            </span></div>
+                          <div class="position-relative form-group text-left"><label for="nome"
+                              class="">Nome</label><input name="nome" id="nome" placeholder="" type="nome"
+                              class="form-control" formControlName="nome">
+                            <span *ngIf="
+                              formCadastro.get('nome')?.invalid &&
+                                (formCadastro.get('nome')?.dirty ||
+                                formCadastro.get('nome')?.touched)
+                              ">
+                              <mat-error *ngIf="formCadastro.get('nome')?.errors?.required">Campo Obrigatorio.
+                              </mat-error>
+                            </span></div>
+                          <div class="position-relative form-group text-left"><label for="ocupacao" class="">Ocupação
+                              (Função)</label><input name="ocupacao" id="ocupacao" placeholder="" type="ocupacao"
+                              class="form-control" formControlName="ocupacao">
+                          </div>
+                          <div class="position-relative form-group text-left"><label for="status">
+                              Status</label> <select id="status" class="form-control" formControlName="status"
+                              formControlName="status">
+                              <option value="" selected disabled>Selecione</option>
+                              <option value="s">Ativo</option>
+                              <option value="n">Inativo</option>
+                            </select>
+                            <span *ngIf="
+                            formCadastro.get('status')?.invalid &&
+                              (formCadastro.get('status')?.dirty ||
+                              formCadastro.get('status')?.touched)
+                            ">
+                              <mat-error *ngIf="formCadastro.get('status')?.errors?.required">Campo Obrigatorio.
+                              </mat-error>
+                            </span>
+                          </div>
+                          <div class="position-relative form-group text-left">
+                            <label for="inicioExpediente" class="">Iníco do Expediente</label>
+                            <input name="inicioExpediente" id="inicioExpediente" placeholder="00:00" mask="00:00"
+                              type="inicioExpediente" class="form-control" formControlName="inicioExpediente">
+                              <span *ngIf="
+                              formCadastro.get('inicioExpediente')?.invalid &&
+                                (formCadastro.get('inicioExpediente')?.dirty ||
+                                formCadastro.get('inicioExpediente')?.touched)
+                              ">
+                                <mat-error *ngIf="formCadastro.get('inicioExpediente')?.errors?.required">Campo Obrigatorio.
+                                </mat-error>
+                              </span>
+                          </div>
+                          <div class="position-relative form-group text-left">
+                            <label for="inicioIntervalo" class="">Iníco do Intervalo (Almoço)</label>
+                            <input name="inicioIntervalo" id="inicioIntervalo" placeholder="00:00" mask="00:00"
+                              type="inicioIntervalo" class="form-control" formControlName="inicioIntervalo">
+                              <span *ngIf="
+                              formCadastro.get('inicioIntervalo')?.invalid &&
+                                (formCadastro.get('inicioIntervalo')?.dirty ||
+                                formCadastro.get('inicioIntervalo')?.touched)
+                              ">
+                                <mat-error *ngIf="formCadastro.get('inicioIntervalo')?.errors?.required">Campo Obrigatorio.
+                                </mat-error>
+                              </span></div>
+                          <div class="position-relative form-group text-left">
+                            <label for="fimIntervalo" class="">Fim do
+                              Intervalo (Almoço)</label>
+                            <input name="fimIntervalo" id="fimIntervalo" placeholder="00:00" mask="00:00"
+                              type="fimIntervalo" class="form-control" formControlName="fimIntervalo">
+                              <span *ngIf="
+                              formCadastro.get('fimIntervalo')?.invalid &&
+                                (formCadastro.get('fimIntervalo')?.dirty ||
+                                formCadastro.get('fimIntervalo')?.touched)
+                              ">
+                                <mat-error *ngIf="formCadastro.get('fimIntervalo')?.errors?.required">Campo Obrigatorio.
+                                </mat-error>
+                              </span></div>
+                          <div class="position-relative form-group text-left">
+                            <label for="fimExpediente" class="">
+                              Fim do Expediente</label>
+                            <input name="fimExpediente" id="fimExpediente" placeholder="00:00" mask="00:00"
+                              type="fimExpediente" class="form-control" formControlName="fimExpediente">
+                              <span *ngIf="
+                              formCadastro.get('fimExpediente')?.invalid &&
+                                (formCadastro.get('fimExpediente')?.dirty ||
+                                formCadastro.get('fimExpediente')?.touched)
+                              ">
+                                <mat-error *ngIf="formCadastro.get('fimExpediente')?.errors?.required">Campo Obrigatorio.
+                                </mat-error>
+                              </span></div>
+                          <div class="position-relative form-group text-left">
+                            <div class="custom-checkbox custom-control"><input type="checkbox" id="adm"
+                                class="custom-control-input" formControlName="adm"
+                                formControlName="adm"><label class="custom-control-label"
+                                for="adm">Administrador</label></div>
+                          </div>
+                          <div class="position-relative form-group text-left"><label for="senha"
+                              class="">Senha</label><input name="senha" id="senha" placeholder="" type="text"
+                              class="form-control" formControlName="senha">
+                            <span *ngIf="
+                            formCadastro.get('senha')?.invalid &&
+                              (formCadastro.get('senha')?.dirty ||
+                              formCadastro.get('senha')?.touched)
+                            ">
+                              <mat-error *ngIf="formCadastro.get('senha')?.errors?.required">Campo Obrigatorio.
+                              </mat-error>
+                            </span></div>
+
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-6">
+                              <button class="mt-1 btn btn-primary btn-sx" (click)="salvar()"><i class="fa fa-floppy-o"
+                                  aria-hidden="true"></i>&nbsp;Salvar</button>
+                            </div>
+                            <div class="col-md-6">
+                              <button class="mt-1 btn btn-warning btn-sx" (click)="limpar()"><i class="fa fa-refresh"
+                                  aria-hidden="true"></i>&nbsp;Limpar</button>
+                                </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Tela aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+<app-loading-screen [modalVisible]="modalVisible" [modalVisibleSpinner]="modalVisibleSpinner"></app-loading-screen>

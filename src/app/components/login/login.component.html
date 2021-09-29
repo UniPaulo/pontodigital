@@ -1,0 +1,79 @@
+<app-modal *ngIf="lightbox" (onClick)="closeLightbox()">
+  <p [innerHTML]="message_error"></p>
+</app-modal>
+
+<section class="h-100 gradient-form" style="background-color: rgb(0, 134, 233);">
+  <div class="container py-1 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-sm-4">
+        <div class="card rounded-3 text-black">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-body p-md-8 mx-md-2">
+
+                <div class="text-center">
+                  <img src="../../../assets/img/logo200x200.png" style="width: 100px;" alt="logo">
+                </div>
+                <br>
+
+                <form [formGroup]="formGroupLogin">
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="cpf">CPF</label>
+                    <input autocomplete="chrome-off" type="tel" mask="000.000.000-00" id="cpf" class="form-control"
+                      placeholder="000.000.000-00" formControlName="cpf" (input)="buscaEmpresas()" />
+                      <span
+                      *ngIf="
+                      formGroupLogin.get('cpf')?.invalid &&
+                        (formGroupLogin.get('cpf')?.dirty ||
+                        formGroupLogin.get('cpf')?.touched)
+                      "
+                    >
+                      <mat-error *ngIf="formGroupLogin.get('cpf')?.errors?.required">Campo Obrigatorio.</mat-error>
+                      <mat-error *ngIf="formGroupLogin.get('cpf')?.hasError('digit')">CPF inválido.</mat-error>
+                    </span>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="senha">Senha</label>
+                    <input type="password" id="senha" class="form-control" placeholder="****************" formControlName="senha" />
+                    <span
+                    *ngIf="
+                    formGroupLogin.get('senha')?.invalid &&
+                      (formGroupLogin.get('senha')?.dirty ||
+                      formGroupLogin.get('senha')?.touched)
+                    "
+                  >
+                    <mat-error *ngIf="formGroupLogin.get('senha')?.errors?.required">Campo Obrigatorio.</mat-error>
+                  </span>
+                  </div>
+
+                  <div class="form-outline mb-4" *ngIf="existe">
+                    <label for="empresa">Empresa</label>
+                    <select id="empresa" class="form-control" formControlName="empresa" [disabled]="existe">
+                      <option value="" selected disabled>Selecione</option>
+                      <option
+                        [value]="item.id"
+                        *ngFor="let item of lista_empresas"
+                      >
+                        {{ item.nome }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="text-center pt-1 mb-5 pb-1">
+                    <button class="btn btn-primary gradient-custom-2" type="button" [disabled]="!ok"
+                      (click)="autenticar()">Entrar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-loading-screen [modalVisible]="modalVisible" [modalVisibleSpinner]="modalVisibleSpinner"></app-loading-screen>

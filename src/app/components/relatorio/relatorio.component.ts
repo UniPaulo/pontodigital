@@ -71,12 +71,20 @@ export class RelatorioComponent implements OnInit {
         ''
       );
     }
-    dataInicio = moment(this.formRelatorio?.get('data_inicio')?.value)
-      .add(-1, 'M')
-      .format('YYYY-MM-DD');
-    dataFim = moment(this.formRelatorio?.get('data_fim')?.value)
-      .add(-1, 'M')
-      .format('YYYY-MM-DD');
+
+    if (this.formRelatorio?.get('data_inicio')?.value == 'undefined/undefined/undefined' || this.formRelatorio?.get('data_fim')?.value == 'undefined/undefined/undefined') {
+      this.message_error =
+        'Obrigatório informar os Filtros de Data Início e Data Final';
+      this.lightbox = true;
+      this.modalVisible = false;
+      this.modalVisibleSpinner = false;
+      return;
+    }
+
+    dataInicio = `${this.formRelatorio?.get('data_inicio')?.value.year}-${this.formRelatorio?.get('data_inicio')?.value.month}-${(this.formRelatorio?.get('data_inicio')?.value.day.length == 1 ? "0"+this.formRelatorio?.get('data_inicio')?.value.day : this.formRelatorio?.get('data_inicio')?.value.day)}T00:00:00`;
+    dataFim = `${this.formRelatorio?.get('data_fim')?.value.year}-${this.formRelatorio?.get('data_fim')?.value.month}-${(this.formRelatorio?.get('data_fim')?.value.day.length == 1 ? "0"+this.formRelatorio?.get('data_fim')?.value.day : this.formRelatorio?.get('data_fim')?.value.day)}T00:00:00`;
+
+
     if (filtro != '' && dataInicio != '' && dataFim != '') {
       if (dataInicio == 'Invalid date' || dataFim == 'Invalid date') {
         this.message_error =

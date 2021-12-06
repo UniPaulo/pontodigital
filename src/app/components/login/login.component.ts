@@ -67,8 +67,7 @@ export class LoginComponent implements OnInit {
     this.modalVisibleSpinner = true;
 
     this.in_body = { cpf: this.formGroupLogin?.get("cpf")?.value, senha: this.formGroupLogin?.get("senha")?.value, idPessoaJuridica: Number(this.formGroupLogin?.get("empresa")?.value) };
-
-    this.myCommon.autenticar(this.in_body, this.in_header).subscribe(
+    this.myCommon.autenticar(this.in_body).subscribe(
       (response) => {
         this.response_api = response;
         this.modalVisible = false;
@@ -118,28 +117,79 @@ export class LoginComponent implements OnInit {
     let cpf: string;
     cpf = this.formGroupLogin.get('cpf')?.value;
     if (cpf.length == 11) {
-      this.myCommon.getEmpresas(this.in_header, cpf).subscribe(
+      this.myCommon.token(this.formGroupLogin?.get("cpf")?.value).subscribe(
         (response) => {
-          this.existe = true;
-          this.formGroupLogin.get('empresa')?.enable();
-          this.lista_empresas = response;
-          this.ok = true;
+          this.response_api = response;
+          if(this.response_api?.token != null)
+          {
+            this.modalVisible = false;
+            this.modalVisibleSpinner = false;
+            sessionStorage.setItem("token", this.response_api.token);
+            this.myCommon.getPessoaFisicaCPF(cpf).subscribe(
+              (response_1) => {
+                this.response_api = response_1;
+                if(this.response_api.cpf != null)
+                {
+                  this.myCommon.getEmpresas(cpf).subscribe(
+                    (response_2) => {
+                      this.existe = true;
+                      this.formGroupLogin.get('empresa')?.enable();
+                      this.lista_empresas = response_2;
+                      this.ok = true;
+                    },
+                    (error) => {
+                      if(error.status == 0){
+                        this.message_error = "Erro interno ao buscar empresas vinculadas ao CPF informado";
+                      }
+                      else
+                      {
+                        this.message_error = error.error;
+                      }
+                      this.existe = false;
+                      this.lightbox = true;
+                      this.modalVisible = false;
+                      this.modalVisibleSpinner = false;
+                      this.formGroupLogin.get('empresa')?.disable();
+                    }
+                  );
+                }
+                else
+                {
+                  this.message_error = "CPF não encontrado na base dados.";
+                }
+              },
+              (error) => {
+                if(error.status == 0){
+                  this.message_error = "Erro interno ao buscar informações do CPF";
+                }
+                else
+                {
+                  this.message_error = "CPF não encontrado na base dados.";
+                }
+                this.lightbox = true;
+                this.modalVisible = false;
+                this.modalVisibleSpinner = false;
+              }
+            );
+          }
+          else
+          {
+            this.message_error = "Erro interno ao gerar token";
+          }
         },
         (error) => {
           if(error.status == 0){
-            this.message_error = "Erro interno ao buscar informações do CPF";
+            this.message_error = "Erro interno ao gerar token";
           }
           else
           {
             this.message_error = error.error;
           }
-          this.existe = false;
           this.lightbox = true;
           this.modalVisible = false;
           this.modalVisibleSpinner = false;
-          this.formGroupLogin.get('empresa')?.disable();
         }
-      );
+        );
     }
     else
     {

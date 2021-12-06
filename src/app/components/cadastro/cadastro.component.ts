@@ -65,7 +65,7 @@ export class CadastroComponent implements OnInit {
     let cpf: string;
     cpf = this.formCadastro.get('cpf')?.value;
     if (cpf.length == 11) {
-      this.myCommon.getPessoaFisicaCPF(this.in_header, cpf).subscribe(
+      this.myCommon.getPessoaFisicaCPF(cpf).subscribe(
         (response) => {
           this.response_api = response;
           this.formCadastro?.get("nome")?.setValue(this.response_api.nome);

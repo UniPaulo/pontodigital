@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
 
     this.in_body = { idPessoaFisica: Number(sessionStorage.getItem("pf")), idPessoaJuridica: Number(sessionStorage.getItem("pj")) };
 
-    this.myCommon.ponto(this.in_body, this.in_header).subscribe(
+    this.myCommon.ponto(this.in_body).subscribe(
       (response) => {
         this.response_api = response;
         this.modalVisible = false;

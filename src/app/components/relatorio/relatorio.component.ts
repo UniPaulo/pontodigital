@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { CommonService } from 'src/app/services/common.service';
 
+
 @Component({
   selector: 'app-relatorio',
   templateUrl: './relatorio.component.html',
@@ -31,7 +32,7 @@ export class RelatorioComponent implements OnInit {
     this.formRelatorio = this.fb.group({
       filtro: ['', Validators.required],
       data_inicio: [
-        moment().subtract(6, 'months').format(),
+        moment().subtract(10, 'years').format(),
         Validators.required,
       ],
       data_fim: [moment().format(), Validators.required],
@@ -72,23 +73,30 @@ export class RelatorioComponent implements OnInit {
       );
     }
 
+    if(this.formRelatorio.get('filtro')?.value == null || this.formRelatorio.get('filtro')?.value == "" || this.formRelatorio.get('filtro')?.value == 'undefined')
+    {
+    this.message_error = 'Obrigatório informar Nome ou CPF no campo Filtro';
+    this.lightbox = true;
+    this.modalVisible = false;
+    this.modalVisibleSpinner = false;
+    return;
+    }
     if (this.formRelatorio?.get('data_inicio')?.value == 'undefined/undefined/undefined' || this.formRelatorio?.get('data_fim')?.value == 'undefined/undefined/undefined') {
-      this.message_error =
-        'Obrigatório informar os Filtros de Data Início e Data Final';
+      this.message_error = 'Obrigatório informar os Filtros de Data Início e Data Final';
       this.lightbox = true;
       this.modalVisible = false;
       this.modalVisibleSpinner = false;
       return;
     }
 
-    dataInicio = `${this.formRelatorio?.get('data_inicio')?.value.year}-${this.formRelatorio?.get('data_inicio')?.value.month}-${(this.formRelatorio?.get('data_inicio')?.value.day.length == 1 ? "0"+this.formRelatorio?.get('data_inicio')?.value.day : this.formRelatorio?.get('data_inicio')?.value.day)}T00:00:00`;
-    dataFim = `${this.formRelatorio?.get('data_fim')?.value.year}-${this.formRelatorio?.get('data_fim')?.value.month}-${(this.formRelatorio?.get('data_fim')?.value.day.length == 1 ? "0"+this.formRelatorio?.get('data_fim')?.value.day : this.formRelatorio?.get('data_fim')?.value.day)}T00:00:00`;
 
+
+    dataInicio = this.formRelatorio?.get('data_inicio')?.value.day == null || this.formRelatorio?.get('data_inicio')?.value.day == 'undefined' ?  this.date_01_01_21.toISOString(): `${this.formRelatorio?.get('data_inicio')?.value.year}-${this.formRelatorio?.get('data_inicio')?.value.month}-${(this.formRelatorio?.get('data_inicio')?.value.day.length == 1 ? "0"+this.formRelatorio?.get('data_inicio')?.value.day : this.formRelatorio?.get('data_inicio')?.value.day)}T00:00:00`;
+    dataFim = this.formRelatorio?.get('data_fim')?.value.day == null || this.formRelatorio?.get('data_fim')?.value.day == 'undefined' ? new Date().toISOString(): `${this.formRelatorio?.get('data_fim')?.value.year}-${this.formRelatorio?.get('data_fim')?.value.month}-${(this.formRelatorio?.get('data_fim')?.value.day.length == 1 ? "0"+this.formRelatorio?.get('data_fim')?.value.day : this.formRelatorio?.get('data_fim')?.value.day)}T00:00:00`;
 
     if (filtro != '' && dataInicio != '' && dataFim != '') {
       if (dataInicio == 'Invalid date' || dataFim == 'Invalid date') {
-        this.message_error =
-          'Obrigatório informar os Filtros de Data Início e Data Final';
+        this.message_error = 'Obrigatório informar os Filtros de Data Início e Data Final';
         this.lightbox = true;
         this.modalVisible = false;
         this.modalVisibleSpinner = false;
@@ -96,7 +104,6 @@ export class RelatorioComponent implements OnInit {
       }
       this.myCommon
         .getRelatorio(
-          this.in_header,
           filtro,
           dataInicio,
           dataFim,

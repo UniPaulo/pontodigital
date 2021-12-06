@@ -1,26 +1,27 @@
   <div class="app-header header-shadow">
     <div class="app-header__content">
       <div class="app-header-left">
-        <ul class="header-menu nav">
-          <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link" [routerLink]="['/dashboard']">
-              <i class="nav-link-icon fa fa-home"> </i>
-              Início
-            </a>
-          </li>
-          <li class="btn-group nav-item">
-            <a href="javascript:void(0);" class="nav-link" [routerLink]="['/relatorio']">
-              <i class="nav-link-icon fa fa-signal"></i>
-              Relatório
-            </a>
-          </li>
-          <li class="dropdown nav-item" *ngIf="func">
-            <a href="javascript:void(0);" class="nav-link" [routerLink]="['/cadastro']">
-              <i class="nav-link-icon fa fa-plus"></i>
-              Cadastrar/Editar Funcionário
-            </a>
-          </li>
-        </ul>
+        <div class="row">
+          <ul class="header-menu nav">
+            <li class="nav-item">
+              <a href="javascript:void(0);" class="nav-link" [routerLink]="['/dashboard']">
+                <i class="nav-link-icon fa fa-home"> </i>
+                Início
+              </a>
+            </li>
+            <li class="btn-group nav-item">
+              <a href="javascript:void(0);" class="nav-link" [routerLink]="['/relatorio']">
+                <i class="nav-link-icon fa fa-signal"></i>
+                Relatório
+              </a>
+            </li>
+            <li class="dropdown nav-item" style="white-space: nowrap;" *ngIf="func">
+              <a href="javascript:void(0);" class="nav-link" [routerLink]="['/cadastro']">
+                <i class="nav-link-icon fa fa-plus"></i>
+                Cadastrar/Editar Funcionário
+              </a>
+            </li>
+          </ul>
       </div>
       <div class="app-header-right">
         <div class="header-btn-lg pr-0">

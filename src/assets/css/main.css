@@ -10243,7 +10243,11 @@ button,
 
 .app-header .app-header__content .app-header-left {
 	display: flex;
-	align-items: center
+	align-items: center;
+	align-content: center;
+	flex: 1;
+	padding: 0 1.5rem;
+	height: 60px
 }
 
 .app-header .app-header__content .header-menu .nav-link {

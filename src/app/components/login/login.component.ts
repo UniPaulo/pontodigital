@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
     return this.formGroupLogin.controls;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   autenticar() {
 

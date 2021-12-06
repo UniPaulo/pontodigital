@@ -135,7 +135,7 @@ export class CadastroComponent implements OnInit {
      senha: this.formCadastro?.get("senha")?.value,
     };
 
-    this.myCommon.salvarpessoa(this.in_body, this.in_header).subscribe(
+    this.myCommon.salvarpessoa(this.in_body).subscribe(
       (response) => {
         this.response_api = response;
         this.message_error = "Funcionário cadastrado com sucesso.";
